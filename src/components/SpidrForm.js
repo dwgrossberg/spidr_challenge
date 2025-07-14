@@ -49,118 +49,150 @@ function SpidrForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        maxWidth: "40vw",
-        margin: "30vh auto 0 auto",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1.5rem",
-      }}
-    >
-      <input
-        type="text"
-        name="firstName"
-        placeholder="First Name"
-        value={formData.firstName}
-        onChange={handleChange}
-        required
+    <div className="form-container">
+      <form
+        onSubmit={handleSubmit}
         style={{
-          height: "2rem",
-          borderRadius: "5px",
-          fontSize: "16px",
+          maxWidth: "40vw",
+          margin: "30vh auto 0 auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.5rem",
         }}
-      />
-      <input
-        type="text"
-        name="lastName"
-        placeholder="Last Name"
-        value={formData.lastName}
-        onChange={handleChange}
-        required
-        style={{
-          height: "2rem",
-          borderRadius: "5px",
-          fontSize: "16px",
-        }}
-      />
-      <input
-        type="tel"
-        name="phone"
-        placeholder="Phone Number"
-        value={formData.phone}
-        onChange={handleChange}
-        required
-        style={{
-          height: "2rem",
-          borderRadius: "5px",
-          fontSize: "16px",
-        }}
-      />
-      {errors.phone && (
-        <span style={{ color: "red", fontSize: "0.8rem" }}>{errors.phone}</span>
-      )}
-
-      <input
-        type="email"
-        name="email"
-        placeholder="Email Address"
-        value={formData.email}
-        onChange={handleChange}
-        required
-        style={{
-          height: "2rem",
-          borderRadius: "5px",
-          fontSize: "16px",
-        }}
-      />
-      <input
-        type="number"
-        name="airFryerGuess"
-        placeholder="Guess the Air Fryer’s Cost ($)"
-        value={formData.airFryerGuess}
-        onChange={handleChange}
-        required
-        style={{
-          height: "2rem",
-          borderRadius: "5px",
-          fontSize: "16px",
-        }}
-      />
-      <input
-        type="text"
-        name="pin"
-        placeholder="####-####-####-####"
-        value={formData.pin}
-        onChange={handleChange}
-        pattern="\d{4}-\d{4}-\d{4}-\d{4}"
-        required
-        style={{
-          height: "2rem",
-          borderRadius: "5px",
-          fontSize: "16px",
-        }}
-      />
-      <button
-        type="submit"
-        style={{
-          padding: "0.75rem",
-          background: "rgba(69, 147, 162)",
-          border: "none",
-          color: "#ffffff",
-          fontWeight: "bold",
-          fontSize: "18px",
-          cursor: "pointer",
-          transition: "transform 0.15s ease, background-color 0.15s ease",
-          borderRadius: "5px",
-        }}
-        onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
-        onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
       >
-        Submit
-      </button>
-    </form>
+        <label className="form-field">
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+            style={{
+              height: "2rem",
+              borderRadius: "5px",
+              fontSize: "16px",
+              padding: "16px",
+              width: "100%",
+            }}
+          />
+        </label>
+        <label className="form-field">
+          <input
+            type="text"
+            name="lastName"
+            className="form-field"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            style={{
+              height: "2rem",
+              borderRadius: "5px",
+              fontSize: "16px",
+              padding: "16px",
+              width: "100%",
+            }}
+          />
+        </label>
+        <label className="form-field">
+          <input
+            type="tel"
+            name="phone"
+            className="form-field"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            style={{
+              height: "2rem",
+              borderRadius: "5px",
+              fontSize: "16px",
+              padding: "16px",
+              width: "100%",
+            }}
+          />
+        </label>
+        {errors.phone && (
+          <span style={{ color: "red", fontSize: "0.8rem" }}>
+            {errors.phone}
+          </span>
+        )}
+        <label className="form-field">
+          <input
+            type="email"
+            name="email"
+            className="form-field"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            style={{
+              height: "2rem",
+              borderRadius: "5px",
+              fontSize: "16px",
+              padding: "16px",
+              width: "100%",
+            }}
+          />
+        </label>
+        <label className="form-field">
+          <input
+            type="number"
+            name="airFryerGuess"
+            className="form-field"
+            placeholder="Guess the Air Fryer’s Cost ($)"
+            value={formData.airFryerGuess}
+            onChange={handleChange}
+            required
+            style={{
+              height: "2rem",
+              borderRadius: "5px",
+              fontSize: "16px",
+              padding: "16px",
+              width: "100%",
+            }}
+          />
+        </label>
+        <label className="form-field">
+          <input
+            type="text"
+            name="pin"
+            className="form-field"
+            placeholder="16-digit Spidr PIN"
+            value={formData.pin}
+            onChange={handleChange}
+            pattern="\d{4}-\d{4}-\d{4}-\d{4}"
+            required
+            style={{
+              height: "2rem",
+              borderRadius: "5px",
+              fontSize: "16px",
+              padding: "16px",
+              width: "100%",
+            }}
+          />
+        </label>
+        <button
+          type="submit"
+          style={{
+            padding: "0.75rem",
+            background: "rgba(69, 147, 162)",
+            border: "none",
+            color: "#ffffff",
+            fontWeight: "bold",
+            fontSize: "18px",
+            cursor: "pointer",
+            transition: "transform 0.15s ease, background-color 0.15s ease",
+            borderRadius: "5px",
+          }}
+          onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+          onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
 
