@@ -12,6 +12,6 @@ A form built for the launch of a mock Spidr air-fryer.
 
 ## Tech Stack
 
-- React.jså
+- React.js
 - CSS
 - css-doodle
