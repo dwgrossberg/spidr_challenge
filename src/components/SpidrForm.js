@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function SpidrForm() {
   const [formData, setFormData] = useState({
@@ -10,18 +10,62 @@ function SpidrForm() {
     pin: "",
   });
 
-  const [errors, setErrors] = useState({});
+  // Set all fields as invalid on page load
+  const initialErrors = {
+    firstName: true,
+    lastName: true,
+    phone: true,
+    email: true,
+    airFryerGuess: true,
+    pin: true,
+  };
+  const initialTouched = {
+    firstName: true,
+    lastName: true,
+    phone: true,
+    email: true,
+    airFryerGuess: true,
+    pin: true,
+  };
+
+  const [errors, setErrors] = useState(initialErrors);
+  const [touched, setTouched] = useState(initialTouched);
 
   const validatePhone = (phone) => {
     const cleaned = phone.replace(/[^0-9]/g, "");
     return /^(1)?\d{10}$/.test(cleaned);
   };
 
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const validatePin = (pin) => {
+    return /^\d{4}-\d{4}-\d{4}-\d{4}$/.test(pin);
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "firstName":
+      case "lastName":
+        return value.trim() !== "";
+      case "phone":
+        return validatePhone(value);
+      case "email":
+        return validateEmail(value);
+      case "airFryerGuess":
+        return value.trim() !== "" && !isNaN(Number(value));
+      case "pin":
+        return validatePin(value);
+      default:
+        return true;
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
 
-    // Auto-format PIN as ####-####-####-####
     if (name === "pin") {
       formattedValue = value
         .replace(/[^0-9]/g, "")
@@ -31,22 +75,59 @@ function SpidrForm() {
     }
 
     setFormData({ ...formData, [name]: formattedValue });
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: !validateField(name, formattedValue),
+    }));
+  };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: !validateField(name, formData[name]),
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
-
-    if (!validatePhone(formData.phone)) {
-      newErrors.phone = "Please enter a valid U.S. phone number.";
-    }
-
+    Object.keys(formData).forEach((key) => {
+      if (!validateField(key, formData[key])) {
+        newErrors[key] = true;
+      }
+    });
     setErrors(newErrors);
+    setTouched({
+      firstName: true,
+      lastName: true,
+      phone: true,
+      email: true,
+      airFryerGuess: true,
+      pin: true,
+    });
 
     if (Object.keys(newErrors).length === 0) {
       console.log("Form Submitted:", formData);
     }
   };
+
+  const renderValidationIcon = (name) =>
+    errors[name] && touched[name] ? (
+      <span
+        className="form-field-invalid"
+        aria-label="Invalid input"
+        title="Invalid input"
+      ></span>
+    ) : (
+      <span
+        className="form-field-valid"
+        aria-label="Valid input"
+        title="Valid input"
+      ></span>
+    );
 
   return (
     <div className="form-container">
@@ -60,13 +141,17 @@ function SpidrForm() {
           gap: "1.5rem",
         }}
       >
-        <label className="form-field">
+        <label
+          className="form-field"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <input
             type="text"
             name="firstName"
             placeholder="First Name"
             value={formData.firstName}
             onChange={handleChange}
+            onBlur={handleBlur}
             required
             style={{
               height: "2rem",
@@ -76,8 +161,12 @@ function SpidrForm() {
               width: "100%",
             }}
           />
+          {renderValidationIcon("firstName")}
         </label>
-        <label className="form-field">
+        <label
+          className="form-field"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <input
             type="text"
             name="lastName"
@@ -85,6 +174,7 @@ function SpidrForm() {
             placeholder="Last Name"
             value={formData.lastName}
             onChange={handleChange}
+            onBlur={handleBlur}
             required
             style={{
               height: "2rem",
@@ -94,8 +184,12 @@ function SpidrForm() {
               width: "100%",
             }}
           />
+          {renderValidationIcon("lastName")}
         </label>
-        <label className="form-field">
+        <label
+          className="form-field"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <input
             type="tel"
             name="phone"
@@ -103,6 +197,7 @@ function SpidrForm() {
             placeholder="Phone Number"
             value={formData.phone}
             onChange={handleChange}
+            onBlur={handleBlur}
             required
             style={{
               height: "2rem",
@@ -112,13 +207,12 @@ function SpidrForm() {
               width: "100%",
             }}
           />
+          {renderValidationIcon("phone")}
         </label>
-        {errors.phone && (
-          <span style={{ color: "red", fontSize: "0.8rem" }}>
-            {errors.phone}
-          </span>
-        )}
-        <label className="form-field">
+        <label
+          className="form-field"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <input
             type="email"
             name="email"
@@ -126,6 +220,7 @@ function SpidrForm() {
             placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             required
             style={{
               height: "2rem",
@@ -135,8 +230,12 @@ function SpidrForm() {
               width: "100%",
             }}
           />
+          {renderValidationIcon("email")}
         </label>
-        <label className="form-field">
+        <label
+          className="form-field"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <input
             type="number"
             name="airFryerGuess"
@@ -144,6 +243,7 @@ function SpidrForm() {
             placeholder="Guess the Air Fryer’s Cost ($)"
             value={formData.airFryerGuess}
             onChange={handleChange}
+            onBlur={handleBlur}
             required
             style={{
               height: "2rem",
@@ -153,8 +253,12 @@ function SpidrForm() {
               width: "100%",
             }}
           />
+          {renderValidationIcon("airFryerGuess")}
         </label>
-        <label className="form-field">
+        <label
+          className="form-field"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <input
             type="text"
             name="pin"
@@ -162,6 +266,7 @@ function SpidrForm() {
             placeholder="16-digit Spidr PIN"
             value={formData.pin}
             onChange={handleChange}
+            onBlur={handleBlur}
             pattern="\d{4}-\d{4}-\d{4}-\d{4}"
             required
             style={{
@@ -172,6 +277,7 @@ function SpidrForm() {
               width: "100%",
             }}
           />
+          {renderValidationIcon("pin")}
         </label>
         <button
           type="submit"

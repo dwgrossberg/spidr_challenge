@@ -35,13 +35,26 @@ input:focus {
   position: relative;
 }
 
-.form-field::after {
-  content: url("./assets/spidr-logo-16x16.png");
+.form-field-invalid {
+  content: url("./assets/spidr-logo-red.png");
   position: absolute;
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  max-width: 8px;
+  max-width: 20px;
   height: auto;
   opacity: 1;
+  z-index: 1;
+}
+
+.form-field-valid {
+  content: url("./assets/spidr-logo-green.png");
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 20px;
+  height: auto;
+  opacity: 1;
+  z-index: 1;
 }
