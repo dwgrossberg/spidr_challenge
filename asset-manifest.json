@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/spidr_challenge/static/css/main.0b681574.css",
-    "main.js": "/spidr_challenge/static/js/main.705b4df1.js",
+    "main.css": "/spidr_challenge/static/css/main.9031a634.css",
+    "main.js": "/spidr_challenge/static/js/main.83e7b674.js",
     "static/js/453.81f28ebe.chunk.js": "/spidr_challenge/static/js/453.81f28ebe.chunk.js",
     "index.html": "/spidr_challenge/index.html",
-    "main.0b681574.css.map": "/spidr_challenge/static/css/main.0b681574.css.map",
-    "main.705b4df1.js.map": "/spidr_challenge/static/js/main.705b4df1.js.map",
+    "main.9031a634.css.map": "/spidr_challenge/static/css/main.9031a634.css.map",
+    "main.83e7b674.js.map": "/spidr_challenge/static/js/main.83e7b674.js.map",
     "453.81f28ebe.chunk.js.map": "/spidr_challenge/static/js/453.81f28ebe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b681574.css",
-    "static/js/main.705b4df1.js"
+    "static/css/main.9031a634.css",
+    "static/js/main.83e7b674.js"
   ]
 }
